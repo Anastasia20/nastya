@@ -1,0 +1,197 @@
+import math
+print("#######1#######\n")
+listNumbers = [5,1,3,49,15,39]
+
+minElement = listNumbers[0]
+maxElement = listNumbers[0]
+
+for element in listNumbers:
+    if minElement > element:
+        minElement = element
+    if maxElement < element:
+        maxElement = element
+
+print("Max элемент = ", maxElement)
+print("\nMin элемент = ", minElement)
+
+print("\n#######2#######\n")
+def fib(n):
+    if n == 1:
+        return 1
+    if n == 2:
+        return 1
+    return fib(n - 1) + fib(n - 2)
+
+print("n-член последовательности Фибоначчи: ",fib(15))
+
+print("\n#######3#######\n")
+
+a = [[1, 2, 3, 4], [5, 6, 7, 8], [7, 8, 9, 6]]
+b = [[5, 6, 7, 8], [7, 8, 9, 6], [1, 2, 3, 4]]
+
+for row in a:
+    for elem in row:
+        print(elem, end=" ")
+    print()
+
+for row in b:
+    for elem in row:
+        print(elem, end=" ")
+    print()
+
+def MatrixSum(m1, m2):
+    a = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+    for i in range(len(m1)):
+        for j in range(len(m1[i])):
+            a[i][j] = m1[i][j] + m2[i][j]
+    return a
+
+ans = MatrixSum(a, b)
+for row in ans:
+    for elem in row:
+        print(elem, end=" ")
+    print()
+
+def MatrixMulti(m1, m2):
+    a = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+    for i in range(len(m1)):
+        for j in range(len(m2[i])):
+            sum = 0
+            for k in range(len(m1[i])):
+                for h in range(len(m2)):
+                    sum += m1[i][k] * m2[h][j]
+            a[i][j] = sum
+    return a
+
+ans1 = MatrixMulti(a, b)
+for row in ans1:
+    for elem in row:
+        print(elem, end=" ")
+    print()
+
+print("\n#######4#######\n")
+
+def IsContainsConsonants(s):
+    isContain = False
+    for letter in s:
+        if letter.lower() in 'qwrtpsdfghjklzxcvbnm':
+            isContain = True
+    return isContain
+
+def IsContainsHyphen(s):
+    isContain = False
+    for letter in s:
+        if letter.lower() in '-':
+            isContain = True
+    return isContain
+
+isContain = IsContainsConsonants(input("Enter string: "))
+
+if (isContain):
+    print("Contains")
+else:
+    print("Not contains")
+
+print("\n#######5-6#######\n")
+def WordsWithoutHyphenAndWithConsontants(s):
+    text = SplitIntoWords(s)
+    res = list()
+    for word in text:
+        if (IsContainsConsonants(word) and (not IsContainsHyphen(word))):
+            res.append(word)
+    return res
+
+def SplitIntoWords(s) -> list():
+    l = []
+    ss = ""
+    for x in s:
+        if x == " " or x == ',' or x == '. ' or x == '? ' or x == '! ':
+            l.append(ss)
+            ss = ""
+        else:
+            ss += x
+    l.append(ss)
+    return l
+
+text = WordsWithoutHyphenAndWithConsontants(input("Enter words"))
+
+for word in text:
+    print(word, end=' ')
+    print()
+
+wordsCount = dict()
+
+for word in text:
+    lowerWord = word.lower()
+    if lowerWord in wordsCount:
+        wordsCount[lowerWord] = wordsCount[lowerWord] + 1
+    else:
+        wordsCount[lowerWord] = 1
+
+for w in wordsCount.items():
+    print("{0}:".format(w))
+
+def IsPerfectSquare(x):
+    sq = math.floor(math.sqrt(x))
+    res = False
+    if (sq ** 2 == x):
+        res = True
+    return res
+
+def IsEven(x):
+    res = False
+    if (x % 2 == 0):
+        res = True
+    return res
+
+def Intersect(a, b):
+    c = list()
+    for el in a:
+        if ((el in b) & (not (el in c))):
+            c.append(el)
+    return c
+
+def Unoin(a, b):
+    c = list()
+    for el in a:
+        if (not el in c):
+            c.append(el)
+    for el in b:
+        if (not el in c):
+            c.append(el)
+    return c
+
+def Difference(a, b):
+    c = list()
+    for el in a:
+        if (not el in b):
+            c.append(el)
+    return c
+
+def SymmetricDifference(a, b):
+    c = list()
+    for el in a:
+        if (not el in b):
+            c.append(el)
+    for el in b:
+        if ((not el in a) & (not el in c)):
+            c.append(el)
+
+sett = list()
+sa = input("Enter numbers: ").split(" ")
+for s in sa:
+    sett.append(int(s))
+
+a = list()
+b = list()
+
+for el in sett:
+    if (IsEven(el)):
+        a.append(el)
+    if (IsPerfectSquare(el)):
+        b.append(el)
+print("\n#######7#######\n")
+print("Intersect: {0}".format(Intersect(a, b)))
+print("Union: {0}".format(Unoin(a, b)))
+print("Difference: {0}".format(Difference(a, b)))
+print("Symmetric difference: {0}".format(SymmetricDifference(a, b)))
